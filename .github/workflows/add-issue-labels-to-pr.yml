@@ -23,8 +23,7 @@ jobs:
         id: linked-issue-result
         with:
           script: |
-            console.log(github.event)
-            console.log(github.event.pull_request)
+            console.log(github)
 
             // Retrieve pull request body and pull request number
             const { BODY, PRNUMBER } = process.env
