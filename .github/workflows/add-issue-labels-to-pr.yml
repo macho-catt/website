@@ -1,12 +1,11 @@
 # Name that appears on the workflow
 # Note: Below you will see ${{ github }} and the github variable used. The former is an env from GitHub actions and the latter is an object argument of the actions/github-script@v4 workflow. These two are not the same and should not be treated as such!
-name: Add Linked Issue Labels to Pull Request
+name: Add Linked Issue Labels to Pull Request Test
 on:
   pull_request:
     types: [opened, edited]
     branches:
-      - 'gh-pages'
-      - 'wins-feature-1'
+      - 'refactor-gh-actions'
 jobs:
   Add-Linked-Issue-Labels-to-Pull-Request:
     runs-on: ubuntu-latest
@@ -23,6 +22,7 @@ jobs:
         id: linked-issue-result
         with:
           script: |
+          /*
             // Retrieve pull request body and pull request number
             const { BODY, PRNUMBER } = process.env
             
@@ -47,6 +47,11 @@ jobs:
               console.log(`Make sure there is only one issue on PR#${PRNUMBER}!`)
               return false
             }
+          */
+            console.log(on.pull_request)
+            console.log(on.pull_request.types)
+            console.log(name)
+
             
             
       # Returns loudly if previous step failed.
