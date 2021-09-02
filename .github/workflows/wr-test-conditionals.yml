@@ -50,10 +50,6 @@ jobs:
               const artifact1 = fs.readFileSync('artifact-pr-edited.txt')
               console.log('artifact1: ', JSON.parse(artifact1))
             }
-            if(fs.existsSync('artifact-pr-opened-or-edited.txt')){
-              const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
-              console.log('artifact2', JSON.parse(artifact2))
-            }
 
       - name: Read data from artifact2
         uses: actions/github-script@v4
