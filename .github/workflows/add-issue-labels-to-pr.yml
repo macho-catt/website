@@ -10,6 +10,7 @@ on:
 jobs:
   Add-Linked-Issue-Labels-to-Pull-Request:
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.types == 'opened' }}
     steps:
       # Note: This portion uses RegEx to extract linked issues. This is not the best choice, but is required as GitHub does not include linked issues in its env. If this changes in the future, please revise this code.
       - name: Retrieve Linked Issue From Comment
@@ -23,10 +24,6 @@ jobs:
         id: linked-issue-result
         with:
           script: |
-            //console.log('pr: ', github.event.pull_request)
-            console.log('name: ', github.event_name)
-            console.log('action: ', github.event.action)
-
             // Retrieve pull request body and pull request number
             const { BODY, PRNUMBER } = process.env
             
