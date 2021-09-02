@@ -10,7 +10,7 @@ on:
 jobs:
   Add-Linked-Issue-Labels-to-Pull-Request:
     runs-on: ubuntu-latest
-    if: ${{ github.event.action == 'opened' }}
+    if: ${{ github.event.action == 'edited' }}
     steps:
       # Note: This portion uses RegEx to extract linked issues. This is not the best choice, but is required as GitHub does not include linked issues in its env. If this changes in the future, please revise this code.
       - name: Retrieve Linked Issue From Comment
