@@ -22,8 +22,9 @@ jobs:
                repo: context.repo.repo,
                run_id: context.payload.workflow_run.id,
             });
-            console.log(artifacts.data.artifacts)
+            console.log('array: ', artifacts.data.artifacts)
             const artifactData = artifacts.data.artifacts[0]
+            console.log('artifact data: ', artifactData)
             
             // Download artifact with GET API
             // https://octokit.github.io/rest.js/v18#actions-download-artifact
@@ -45,10 +46,10 @@ jobs:
           script: |
             // Retrieve pull request and issue number from downloaded artifact
             const fs = require('fs')
-            const artifact = fs.readFileSync('artifact.txt')
-            const artifactJSON = JSON.parse(artifact)
-            const issueNum = artifactJSON.issueNumber
-            const prNumber = artifactJSON.prNumber
+            const artifact1 = fs.readFileSync('artifact-pr-edited.txt')
+            console.log(artifact1)
+            const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
+            console.log(artifact2)
           
   Last-Workflow-Failure:
     runs-on: ubuntu-latest
