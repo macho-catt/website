@@ -23,7 +23,10 @@ jobs:
         id: linked-issue-result
         with:
           script: |
-          
+            console.log(on.pull_request)
+            console.log(on.pull_request.types)
+            console.log(name)
+            
             // Retrieve pull request body and pull request number
             const { BODY, PRNUMBER } = process.env
             
@@ -48,10 +51,7 @@ jobs:
               console.log(`Make sure there is only one issue on PR#${PRNUMBER}!`)
               return false
             }
-          
-            console.log(on.pull_request)
-            console.log(on.pull_request.types)
-            console.log(name)
+        
 
             
             
