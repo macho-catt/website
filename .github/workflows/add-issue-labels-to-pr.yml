@@ -23,7 +23,7 @@ jobs:
         id: linked-issue-result
         with:
           script: |
-            console.log('pr: ', github.event.pull_request)
+            //console.log('pr: ', github.event.pull_request)
             console.log('name: ', github.event_name)
             console.log('action: ', github.event.action)
 
