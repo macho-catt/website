@@ -46,10 +46,14 @@ jobs:
           script: |
             // Retrieve pull request and issue number from downloaded artifact
             const fs = require('fs')
-            const artifact1 = fs.readFileSync('artifact-pr-edited.txt')
-            if(artifact1) console.log('artifact1: ', JSON.parse(artifact1))
-            const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
-            if(artifact2) console.log('artifact2', JSON.parse(artifact2))
+            if(fs.existsSync('artifact-pr-edited.txt')){
+              const artifact1 = fs.readFileSync('artifact-pr-edited.txt')
+              console.log('artifact1: ', JSON.parse(artifact1))
+            }
+            if(fs.existsSync('artifact-pr-opened-or-edited.txt')){
+              const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
+              console.log('artifact2', JSON.parse(artifact2))
+            }
           
   Last-Workflow-Failure:
     runs-on: ubuntu-latest
