@@ -1,0 +1,58 @@
+# Name that appears on the workflow
+# Note: Below you will see ${{ github }} and the github variable used. The former is an env from GitHub actions and the latter is an object argument of the actions/github-script@v4 workflow. These two are not the same and should not be treated as such!
+name: Test Conditionals
+on:
+  pull_request:
+    types: [opened, edited]
+    branches:
+      - 'gh-pages'
+      - 'refactor-gh-actions'
+  issues:
+    types: [opened]
+jobs:
+  PR-Opened:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened'}}
+    steps:
+      - name: Output to terminal
+        uses: actions/github-script@v4
+        # Escapes user input for injection attacks
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          PRNUMBER: ${{ github.event.number }}
+        # Variable that stores result of script
+        id: linked-issue-result
+        with:
+          script: |
+            console.log('Pull request opened')
+  PR-Edited:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'edited'}}
+    steps:
+      - name: Output to terminal
+        uses: actions/github-script@v4
+        # Escapes user input for injection attacks
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          PRNUMBER: ${{ github.event.number }}
+        # Variable that stores result of script
+        id: linked-issue-result
+        with:
+          script: |
+            console.log('Pull request edited')
+  Issue-Opened:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'issues' && github.event.action == 'opened'}}
+    steps:
+      - name: Output to terminal
+        uses: actions/github-script@v4
+        # Escapes user input for injection attacks
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          PRNUMBER: ${{ github.event.number }}
+        # Variable that stores result of script
+        id: linked-issue-result
+        with:
+          script: |
+            console.log('Issue opened')
+            
