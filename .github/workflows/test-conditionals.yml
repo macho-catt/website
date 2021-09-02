@@ -40,6 +40,21 @@ jobs:
         with:
           script: |
             console.log('Pull request edited')
+  PR-Opened-Or-Edited:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'edited' || github.event.action == 'opened')}}
+    steps:
+      - name: Output to terminal
+        uses: actions/github-script@v4
+        # Escapes user input for injection attacks
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          PRNUMBER: ${{ github.event.number }}
+        # Variable that stores result of script
+        id: linked-issue-result
+        with:
+          script: |
+            console.log('Pull request opened or edited')
   Issue-Opened:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'issues' && github.event.action == 'opened'}}
