@@ -21,7 +21,7 @@ jobs:
           BODY: ${{ github.event.pull_request.body }}
           PRNUMBER: ${{ github.event.number }}
         # Variable that stores result of script
-        id: linked-issue-result
+        id: pr-opened
         with:
           script: |
             console.log('Pull request opened')
@@ -36,10 +36,27 @@ jobs:
           BODY: ${{ github.event.pull_request.body }}
           PRNUMBER: ${{ github.event.number }}
         # Variable that stores result of script
-        id: linked-issue-result
+        id: pr-edited
         with:
           script: |
             console.log('Pull request edited')
+            return 'PR edited'
+
+        # Create an artifact with the results of the script
+      - name: Create Artifacts
+        # Escapes user input for injection attacks
+        env:
+          ARTIFACT: ${{ steps.pr-edited.outputs.result }}
+        run: |
+          mkdir -p testConditionals/artifact
+          echo ${{ env.ARTIFACT }} > testConditionals/artifact/artifact-pr-edited.txt
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-conditionals-artifact
+          path: testConditionals/artifact/
+
   PR-Opened-Or-Edited:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && (github.event.action == 'edited' || github.event.action == 'opened')}}
@@ -51,10 +68,27 @@ jobs:
           BODY: ${{ github.event.pull_request.body }}
           PRNUMBER: ${{ github.event.number }}
         # Variable that stores result of script
-        id: linked-issue-result
+        id: pr-opened-or-edited
         with:
           script: |
             console.log('Pull request opened or edited')
+            return 'PR opened OR edited'
+
+        # Create an artifact with the results of the script
+      - name: Create Artifacts
+        # Escapes user input for injection attacks
+        env:
+          ARTIFACT: ${{ steps.pr-opened-or-edited.outputs.result }}
+        run: |
+          mkdir -p testConditionals/artifact
+          echo ${{ env.ARTIFACT }} > testConditionals/artifact/artifact-pr-opened-or-edited.txt
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-conditionals-artifact
+          path: testConditionals/artifact/
+
   Issue-Opened:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'issues' && github.event.action == 'opened'}}
@@ -66,7 +100,7 @@ jobs:
           BODY: ${{ github.event.pull_request.body }}
           PRNUMBER: ${{ github.event.number }}
         # Variable that stores result of script
-        id: linked-issue-result
+        id: issues-opened
         with:
           script: |
             console.log('Issue opened')
