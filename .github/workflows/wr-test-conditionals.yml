@@ -38,10 +38,10 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/artifact.zip', Buffer.from(download.data));
       - run: unzip artifact.zip
 
-      - name: Read data from artifact
+      - name: Read data from artifact1
         uses: actions/github-script@v4
         # Variable that stores result of script
-        id: labels-result
+        id: artifact1
         with:
           script: |
             // Retrieve pull request and issue number from downloaded artifact
@@ -54,6 +54,20 @@ jobs:
               const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
               console.log('artifact2', JSON.parse(artifact2))
             }
+
+      - name: Read data from artifact2
+        uses: actions/github-script@v4
+        # Variable that stores result of script
+        id: artifact2
+        with:
+          script: |
+            // Retrieve pull request and issue number from downloaded artifact
+            const fs = require('fs')
+            if(fs.existsSync('artifact-pr-opened-or-edited.txt')){
+              const artifact2 = fs.readFileSync('artifact-pr-opened-or-edited.txt')
+              console.log('artifact2', JSON.parse(artifact2))
+            }
+        
           
   Last-Workflow-Failure:
     runs-on: ubuntu-latest
