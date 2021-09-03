@@ -25,6 +25,7 @@ jobs:
         with:
           script: |
             console.log('Pull request opened')
+            
   PR-Edited:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && github.event.action == 'edited'}}
