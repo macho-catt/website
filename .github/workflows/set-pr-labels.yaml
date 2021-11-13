@@ -1,10 +1,11 @@
 name: Set PR Labels
 
-on: pull_request
-  types: [opened, edited]
-  branches:
-    - 'gh-pages'
-    - 'glenflorendo-1892-refactor-action-pr-labels'
+on: 
+  pull_request:
+    types: [opened, edited]
+    branches:
+      - 'gh-pages'
+      - 'glenflorendo-1892-refactor-action-pr-labels'
 
 jobs:
   generate-labels-artifact:
