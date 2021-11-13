@@ -4,7 +4,7 @@ on: pull_request
   types: [opened, edited]
   branches:
     - 'gh-pages'
-    - 'wins-feature-1'
+    - 'glenflorendo-1892-refactor-action-pr-labels'
 
 jobs:
   generate-labels-artifact:
