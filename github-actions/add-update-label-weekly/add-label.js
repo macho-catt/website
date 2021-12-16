@@ -37,7 +37,7 @@ async function main({ g, c }, columnId) {
 		  console.log(`Assignee not found, skipping issue #${issueNum}`)
 		  continue
 		}
-		
+		console.log(`working on issue# ${issueNum}`)
 		// Add and remove labels as well as post comment if the issue's timeline indicates the issue is inactive, to be updated or up to date accordingly 
 		const responseObject = await isTimelineOutdated(timeline, issueNum, assignees)
 		if (responseObject.result === true && responseObject.labels === toUpdateLabel) {
@@ -137,6 +137,7 @@ async function getTimeline(issueNum) {
 
 async function isTimelineOutdated(timeline, issueNum, assignees) {
 	for await (let [index, moment] of timeline.entries()) {
+		console.log("moment is: \n", moment)
 		if (isMomentRecent(moment.created_at, threeDayCutoffTime)) { // all the events of an issue within last three days will return true
 			if (moment.event == 'cross-referenced' && isLinkedIssue(moment, issueNum)) { // checks if cross referenced within last three days 
 				return {result: false, labels: statusUpdatedLabel}
