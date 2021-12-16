@@ -139,6 +139,7 @@ async function isTimelineOutdated(timeline, issueNum, assignees) {
 	for await (let [index, moment] of timeline.entries()) {
 		console.log("moment is: \n", moment)
 		if (isMomentRecent(moment.created_at, threeDayCutoffTime)) { // all the events of an issue within last three days will return true
+			console.log('first if statement')
 			if (moment.event == 'cross-referenced' && isLinkedIssue(moment, issueNum)) { // checks if cross referenced within last three days 
 				return {result: false, labels: statusUpdatedLabel}
 			}
@@ -156,6 +157,7 @@ async function isTimelineOutdated(timeline, issueNum, assignees) {
 			}
 		}
 		else if (isMomentRecent(moment.created_at, sevenDayCutoffTime)) { // all the events of an issue between three and seven days will return true
+			console.log('second if statement')
 			if (moment.event == 'cross-referenced' && isLinkedIssue(moment, issueNum)) { // checks if cross referenced between 3 and 7 days
 				console.log('between 3 and 7 cross referenced');
 				return {result: false, labels: statusUpdatedLabel}
@@ -166,12 +168,14 @@ async function isTimelineOutdated(timeline, issueNum, assignees) {
 			}
 		}
 		else if (isMomentRecent(moment.created_at, fourteenDayCutoffTime)) { // all the events of an issue between seven and fourteen days will return true
+			console.log('third if statement')
 			if (moment.event == 'cross-referenced' && isLinkedIssue(moment, issueNum)) { // checks if cross referenced between 7 and 14 days
 				console.log('between 7 and 14 cross referenced');
 				return {result: false, labels: statusUpdatedLabel}
 			}
 		}
 		else    { // all the events of an issue older than fourteen days will be processed here
+			console.log('else statement')
 			if (moment.event == 'cross-referenced' && isLinkedIssue(moment, issueNum)) { // checks if cross referenced older than fourteen days
 				console.log('14 day event cross referenced');
 				return {result: false, labels: statusUpdatedLabel}
